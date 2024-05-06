@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Numbers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            color: #fff;
+            background-color: cornflowerblue;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Sorting Numbers</h2>
+
+<label for="numbers">Enter 10 numbers (separated by commas):</label>
+<input type="text" id="numbers" placeholder="e.g. 5,3,8,1,6,4,7,9,2,10">
+<br><br>
+
+<button onclick="userDefinedSort()">User-defined Sort</button>
+<button onclick="builtInSort()">Built-in Sort</button>
+
+<div class="result">
+    <label>User-defined Sorted Numbers:</label>
+    <input type="text" id="userSorted" readonly>
+    <br><br>
+    <label>Built-in Sorted Numbers:</label>
+    <input type="text" id="builtInSorted" readonly>
+</div>
+
+<script>
+    function userDefinedSort() {
+        const inputNumbers = document.getElementById('numbers').value;
+        const numbersArray = parseNumbers(inputNumbers);
+
+        // User-defined sorting function
+        const userSortedArray = customSort(numbersArray);
+
+        document.getElementById('userSorted').value = userSortedArray.join(', ');
+    }
+
+    function parseNumbers(input) {
+        const numbersArray = [];
+        let number = '';
+        
+        for (let i = 0; i < input.length; i++) {
+            const char = input[i];
+            
+            if (char === ',') {
+                numbersArray.push(parseFloat(number));
+                number = '';
+            } else {
+                number += char;
+            }
+        }
+
+        if (number) {
+            numbersArray.push(parseFloat(number));
+        }
+        
+        return numbersArray;
+    }
+
+    function customSort(arr) {
+        // Implementing a simple bubble sort
+        for (let i = 0; i < arr.length; i++) {
+            for (let j = 0; j < arr.length - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    let temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+        return arr;
+    }
+
+    function builtInSort() {
+        const inputNumbers = document.getElementById('numbers').value;
+        const numbersArray = parseNumbers(inputNumbers);
+
+        // Using JavaScript built-in sorting function
+        const builtInSortedArray = numbersArray.sort((a, b) => a - b);
+
+        document.getElementById('builtInSorted').value = builtInSortedArray.join(', ');
+    }
+</script>
+
+</body>
+</html>
